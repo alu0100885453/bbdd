@@ -1,0 +1,205 @@
+SQL> SELECT * FROM DUAL;
+
+D                                                                               
+-                                                                               
+X                                                                               
+
+SQL> DESCRIBE DUAL;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DUMMY                                              VARCHAR2(1)
+
+SQL> SYSDATE;
+SP2-0042: unknown command "SYSDATE" - rest of line ignored.
+SQL> SYSDATE
+SP2-0042: unknown command "SYSDATE" - rest of line ignored.
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                         
+---------                                                                       
+08-NOV-17                                                                       
+
+SQL> SELECT CURRENT_DATE FROM DUAL;
+
+CURRENT_D                                                                       
+---------                                                                       
+08-NOV-17                                                                       
+
+SQL> SELECT TO_CHAR(SYSDATE,'HH:MI:SS') FROM DUAL;
+
+TO_CHAR(                                                                        
+--------                                                                        
+01:16:02                                                                        
+
+SQL> SELECT TO_CHAR(SYSDATE,'DDD') FROM DUAL;
+
+TO_                                                                             
+---                                                                             
+312                                                                             
+
+SQL> SELECT TO_CHAR(SYSDATE,'WW') FROM DUAL;
+
+TO                                                                              
+--                                                                              
+45                                                                              
+
+SQL> SELECT LOWER(P) FROM PROFESORES;
+SELECT LOWER(P) FROM PROFESORES
+                     *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT LOWER(P) FROM PROFESOR;
+
+LOWER(P)                                                                        
+------------------------------------------------------------                    
+juan                                                                            
+carlos                                                                          
+pedro                                                                           
+maria                                                                           
+ivan                                                                            
+carmen                                                                          
+mario                                                                           
+francisco                                                                       
+angela                                                                          
+david                                                                           
+soledad                                                                         
+
+LOWER(P)                                                                        
+------------------------------------------------------------                    
+jose manuel                                                                     
+
+12 rows selected.
+
+SQL> SELECT LENGHT(P) FROM PROFESOR;
+SELECT LENGHT(P) FROM PROFESOR
+       *
+ERROR at line 1:
+ORA-00904: "LENGHT": invalid identifier 
+
+
+SQL> SELECT LENGTH(P) FROM PROFESOR;
+
+ LENGTH(P)                                                                      
+----------                                                                      
+         4                                                                      
+         6                                                                      
+         5                                                                      
+         5                                                                      
+         4                                                                      
+         6                                                                      
+         5                                                                      
+         9                                                                      
+         6                                                                      
+         5                                                                      
+         7                                                                      
+
+ LENGTH(P)                                                                      
+----------                                                                      
+        11                                                                      
+
+12 rows selected.
+
+SQL> SELECT SYSDATE - TO_DATE('01-AUG-1996') FROM DUAL;
+
+SYSDATE-TO_DATE('01-AUG-1996')                                                  
+------------------------------                                                  
+                    7769.55735                                                  
+
+SQL> SELECT TRUNC(SYSDATE - TO_DATE('01-AUG-1996')) FROM DUAL;
+
+TRUNC(SYSDATE-TO_DATE('01-AUG-1996'))                                           
+-------------------------------------                                           
+                                 7769                                           
+
+SQL> SELECT A FROM ASIGNATURA CROSS JOIN AREA WHERE (ASIGNATURA.CAR=AREA.CAR) AND (AR LIKE 'A%);
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> SELECT A FROM ASIGNATURA CROSS JOIN AREA WHERE (ASIGNATURA.CAR=AREA.CAR) AND (AR LIKE 'A%');
+
+A                                                                               
+--------------------------------------------------                              
+ALGEBRA                                                                         
+ANALISIS COMPLEJO                                                               
+ASTRONOMIA                                                                      
+
+SQL> SELECT A FROM ASIGNATURA CROSS JOIN AREA WHERE (ASIGNATURA.CAR=AREA.CAR) AND (AR LIKE '%A');
+
+A                                                                               
+--------------------------------------------------                              
+ALGEBRA                                                                         
+ASTRONOMIA                                                                      
+ENSENANZA DE LA MATEMATICA                                                      
+OPTIMIZACION                                                                    
+CALCULO                                                                         
+
+SQL> SELECT A FROM ASIGNATURA WHERE (A LIKE '%DATOS$')
+  2  ;
+
+no rows selected
+
+SQL> SELECT A FROM ASIGNATURA WHERE (A LIKE '%DATOS%');
+
+A                                                                               
+--------------------------------------------------                              
+BASES DE DATOS                                                                  
+ALMACENES DE DATOS                                                              
+MINERIA DE DATOS                                                                
+
+SQL> SELECT DNI FROM PROFESOR WHERE (P LIKE '__R%');
+
+       DNI                                                                      
+----------                                                                      
+      2222                                                                      
+      4444                                                                      
+      6666                                                                      
+      7777                                                                      
+
+SQL> SELECT DNI FROM PROFESOR WHERE (P LIKE '_____');
+
+       DNI                                                                      
+----------                                                                      
+      3333                                                                      
+      4444                                                                      
+      7777                                                                      
+      1010                                                                      
+
+SQL> SELECT DNI FROM PROFESOR WHERE (P LIKE '%%%%%');
+
+       DNI                                                                      
+----------                                                                      
+      1111                                                                      
+      2222                                                                      
+      3333                                                                      
+      4444                                                                      
+      5555                                                                      
+      6666                                                                      
+      7777                                                                      
+      8888                                                                      
+      9999                                                                      
+      1010                                                                      
+      2020                                                                      
+
+       DNI                                                                      
+----------                                                                      
+      3030                                                                      
+
+12 rows selected.
+
+SQL> SELECT DNI FROM PROFESOR WHERE (P NOT LIKE '______%');
+
+       DNI                                                                      
+----------                                                                      
+      1111                                                                      
+      3333                                                                      
+      4444                                                                      
+      5555                                                                      
+      7777                                                                      
+      1010                                                                      
+
+6 rows selected.
+
+SQL> SPOOL OFF
