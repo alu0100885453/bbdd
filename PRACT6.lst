@@ -1,0 +1,426 @@
+SQL> SELECT EXTRACT(YEAR FROM FI)
+  2  ;
+
+*
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT EXTRACT(YEAR FROM FI);
+SELECT EXTRACT(YEAR FROM FI)
+                           *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT EXTRACT(YEAR FROM FI)
+  2  FROM PLAN_DOCENTE;
+
+EXTRACT(YEARFROMFI)                                                             
+-------------------                                                             
+               2005                                                             
+               2008                                                             
+               2009                                                             
+               2007                                                             
+               2009                                                             
+               2008                                                             
+               2006                                                             
+               2009                                                             
+               2009                                                             
+               2008                                                             
+               2009                                                             
+
+EXTRACT(YEARFROMFI)                                                             
+-------------------                                                             
+               2011                                                             
+               2008                                                             
+               2010                                                             
+               2010                                                             
+               2008                                                             
+               2010                                                             
+               2009                                                             
+               2010                                                             
+
+19 rows selected.
+
+SQL> SYSTIMESTAMP;
+SP2-0734: unknown command beginning "SYSTIMESTA..." - rest of line ignored.
+SQL> SELECT * FROM SYSTIMESTAMP;
+SELECT * FROM SYSTIMESTAMP
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SPOOL
+currently spooling to PRACT6.lst
+SQL> SELECT SYSTIMESTAMP FROM DUAL;
+
+SYSTIMESTAMP                                                                    
+---------------------------------------------------------------------------     
+15-NOV-17 01.22.03.187566 PM +00:00                                             
+
+SQL> SELECT CURRENT_SYSTIMESTAMP FROM DUAL;
+SELECT CURRENT_SYSTIMESTAMP FROM DUAL
+       *
+ERROR at line 1:
+ORA-00904: "CURRENT_SYSTIMESTAMP": invalid identifier 
+
+
+SQL> SELECT CURRENT_TIMESTAMP FROM DUAL;
+
+CURRENT_TIMESTAMP                                                               
+---------------------------------------------------------------------------     
+15-NOV-17 01.22.27.648683 PM +00:00                                             
+
+SQL> SELECT TIMESTAMP(F) FROM DUAL;
+SELECT TIMESTAMP(F) FROM DUAL
+       *
+ERROR at line 1:
+ORA-00904: "TIMESTAMP": invalid identifier 
+
+
+SQL> DNI DE LOS PROFESORES QUE AL MENOS IMPARTEN CLASE EN DOS TITULACIONES DISTINTAS;
+SP2-0734: unknown command beginning "DNI DE LOS..." - rest of line ignored.
+SQL> SELECT EXTRAEC(HOUR FROM SYSTIMESTAMP) FROM DUAL;
+SELECT EXTRAEC(HOUR FROM SYSTIMESTAMP) FROM DUAL
+                    *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT EXTRACT(HOUR FROM SYSTIMESTAMP) FROM DUAL;
+
+EXTRACT(HOURFROMSYSTIMESTAMP)                                                   
+-----------------------------                                                   
+                           13                                                   
+
+SQL> SELECT DEPART(WK,'DD/MM/YYYY') FROM DUAL;
+SELECT DEPART(WK,'DD/MM/YYYY') FROM DUAL
+       *
+ERROR at line 1:
+ORA-00904: "DEPART": invalid identifier 
+
+
+SQL> SELECT DATEPART(WK,'DD/MM/YYYY') FROM DUAL;
+SELECT DATEPART(WK,'DD/MM/YYYY') FROM DUAL
+       *
+ERROR at line 1:
+ORA-00904: "DATEPART": invalid identifier 
+
+
+SQL> SELECT DATEPART(WK,SYSTIMESTAMP) FROM DUAL;
+SELECT DATEPART(WK,SYSTIMESTAMP) FROM DUAL
+       *
+ERROR at line 1:
+ORA-00904: "DATEPART": invalid identifier 
+
+
+SQL> SELECT DATEPART(WK) FROM DUAL;
+SELECT DATEPART(WK) FROM DUAL
+       *
+ERROR at line 1:
+ORA-00904: "DATEPART": invalid identifier 
+
+
+SQL> ALTER TABLE DEPARTAMENTO
+  2  ADD (D TIMESTAMP(8) DEFAULT SYSTIMESTAMP(8));
+ADD (D TIMESTAMP(8) DEFAULT SYSTIMESTAMP(8))
+     *
+ERROR at line 2:
+ORA-01430: column being added already exists in table 
+
+
+SQL> ALTER TABLE DEPARTAMENTO
+  2  ADD (D1 TIMESTAMP(8) DEFAULT SYSTIMESTAMP(8));
+
+Table altered.
+
+SQL> SELECT * FROM DEPARTAMENTO;
+
+        CD D                                                                    
+---------- ------------------------------------------------------------         
+D1                                                                              
+---------------------------------------------------------------------------     
+         1 ANALISIS MATEMATICO                                                  
+15-NOV-17 01.34.54.09629300 PM                                                  
+                                                                                
+         2 ASTROFISICA                                                          
+15-NOV-17 01.34.54.09629300 PM                                                  
+                                                                                
+         3 ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                   
+15-NOV-17 01.34.54.09629300 PM                                                  
+                                                                                
+
+        CD D                                                                    
+---------- ------------------------------------------------------------         
+D1                                                                              
+---------------------------------------------------------------------------     
+         4 MATEMATICA FUNDAMENTAL                                               
+15-NOV-17 01.34.54.09629300 PM                                                  
+                                                                                
+
+SQL> SET LINE SIZE 132;
+SP2-0268: linesize option not a valid number
+SQL> SET LINE SIZE 180;
+SP2-0268: linesize option not a valid number
+SQL> SET LINESIZE 132;
+SQL> SELECT * FROM DEPARTAMENTO;
+
+        CD D                                                                                                                        
+---------- ------------------------------------------------------------                                                             
+D1                                                                                                                                  
+---------------------------------------------------------------------------                                                         
+         1 ANALISIS MATEMATICO                                                                                                      
+15-NOV-17 01.34.54.09629300 PM                                                                                                      
+                                                                                                                                    
+         2 ASTROFISICA                                                                                                              
+15-NOV-17 01.34.54.09629300 PM                                                                                                      
+                                                                                                                                    
+         3 ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                       
+15-NOV-17 01.34.54.09629300 PM                                                                                                      
+                                                                                                                                    
+
+        CD D                                                                                                                        
+---------- ------------------------------------------------------------                                                             
+D1                                                                                                                                  
+---------------------------------------------------------------------------                                                         
+         4 MATEMATICA FUNDAMENTAL                                                                                                   
+15-NOV-17 01.34.54.09629300 PM                                                                                                      
+                                                                                                                                    
+
+SQL> SET LINESIZE 180;
+SQL> SELECT * FROM DEPARTAMENTO;
+
+        CD D                                                            D1                                                                                                          
+---------- ------------------------------------------------------------ ---------------------------------------------------------------------------                                 
+         1 ANALISIS MATEMATICO                                          15-NOV-17 01.34.54.09629300 PM                                                                              
+         2 ASTROFISICA                                                  15-NOV-17 01.34.54.09629300 PM                                                                              
+         3 ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           15-NOV-17 01.34.54.09629300 PM                                                                              
+         4 MATEMATICA FUNDAMENTAL                                       15-NOV-17 01.34.54.09629300 PM                                                                              
+
+SQL> SET LINESIZE 132;
+SQL> ;
+  1* SELECT * FROM DEPARTAMENTO
+SQL> SELECT * FROM DEPARTAMENTO;
+
+        CD D                                                                                                                        
+---------- ------------------------------------------------------------                                                             
+D1                                                                                                                                  
+---------------------------------------------------------------------------                                                         
+         1 ANALISIS MATEMATICO                                                                                                      
+15-NOV-17 01.34.54.09629300 PM                                                                                                      
+                                                                                                                                    
+         2 ASTROFISICA                                                                                                              
+15-NOV-17 01.34.54.09629300 PM                                                                                                      
+                                                                                                                                    
+         3 ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                       
+15-NOV-17 01.34.54.09629300 PM                                                                                                      
+                                                                                                                                    
+
+        CD D                                                                                                                        
+---------- ------------------------------------------------------------                                                             
+D1                                                                                                                                  
+---------------------------------------------------------------------------                                                         
+         4 MATEMATICA FUNDAMENTAL                                                                                                   
+15-NOV-17 01.34.54.09629300 PM                                                                                                      
+                                                                                                                                    
+
+SQL> ALTER TABLE DEPARTAMENTO
+  2  DROP COLUMN D1;
+
+Table altered.
+
+SQL> select DATEPART(dw, '11/04/2002');
+select DATEPART(dw, '11/04/2002')
+                                *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> select DATEPART(dw, '11/04/2002') FROM DUAL;
+select DATEPART(dw, '11/04/2002') FROM DUAL
+       *
+ERROR at line 1:
+ORA-00904: "DATEPART": invalid identifier 
+
+
+SQL> select to_char(sysdate, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH')
+  2  from dual ;
+
+TO_CHAR(SYSDATE,'DAY','NLS_DATE_LANG                                                                                                
+------------------------------------                                                                                                
+MIERCOLES                                                                                                                           
+
+SQL> DESCRIBE DEPARTAMENTO;
+ Name                                                                     Null?    Type
+ ------------------------------------------------------------------------ -------- -------------------------------------------------
+ CD                                                                       NOT NULL NUMBER(2)
+ D                                                                                 VARCHAR2(60)
+
+SQL> MODIFY(D VARCHAR(50));
+SP2-0734: unknown command beginning "MODIFY(D V..." - rest of line ignored.
+SQL> ALTER TABLE DEPARTAMENTO
+  2  MODIFY(D VARCHAR(50));
+
+Table altered.
+
+SQL> select to_char(sysdate, 'DAY/DD/MM/YYYY', 'NLS_DATE_LANGUAGE=SPANISH')
+  2  FROM DUAL;
+
+TO_CHAR(SYSDATE,'DAY/DD/MM/YYYY','NLS_DATE_LANG                                                                                     
+-----------------------------------------------                                                                                     
+MIERCOLES/15/11/2017                                                                                                                
+
+SQL> SELECT EXTRACT(HOUR FROM SYSTIMESTAMP) FROM DUAL;
+
+EXTRACT(HOURFROMSYSTIMESTAMP)                                                                                                       
+-----------------------------                                                                                                       
+                           13                                                                                                       
+
+SQL> SELECT EXTRACT(HOUR/SEGUND FROM SYSTIMESTAMP) FROM DUAL;
+SELECT EXTRACT(HOUR/SEGUND FROM SYSTIMESTAMP) FROM DUAL
+                           *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT EXTRACT(HH:MI:SS FROM SYSTIMESTAMP) FROM DUAL;
+SP2-0552: Bind variable "MI" not declared.
+SQL> SELECT TO_CHAR(HH:MI:SS FROM SYSTIMESTAMP) FROM DUAL;
+SP2-0552: Bind variable "MI" not declared.
+SQL> SELECT TO_CHAR(HH/MI/SS FROM SYSTIMESTAMP) FROM DUAL;
+SELECT TO_CHAR(HH/MI/SS FROM SYSTIMESTAMP) FROM DUAL
+                        *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT TO_CHAR(SYSDATE, 'HH/MI/SS') FROM DUAL;
+
+TO_CHAR(                                                                                                                            
+--------                                                                                                                            
+01/49/03                                                                                                                            
+
+SQL> SELECT TO_CHAR(SYSDATE, 'HH:MI:SS') FROM DUAL;
+
+TO_CHAR(                                                                                                                            
+--------                                                                                                                            
+01:49:22                                                                                                                            
+
+SQL> SELECT TO_CHAR(SYSDATE, 'HH:MI:SS' PM) FROM DUAL;
+SELECT TO_CHAR(SYSDATE, 'HH:MI:SS' PM) FROM DUAL
+                                   *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT TO_CHAR(SYSDATE, 'HH:MI:SS' 24) FROM DUAL;
+SELECT TO_CHAR(SYSDATE, 'HH:MI:SS' 24) FROM DUAL
+                                   *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT TO_CHAR(SYSDATE, 'HH24:MI:SS') FROM DUAL;
+
+TO_CHAR(                                                                                                                            
+--------                                                                                                                            
+13:50:19                                                                                                                            
+
+SQL> SELECT SYSDATE - EXTRACT(DATE FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888))FROM DUAL;
+SELECT SYSDATE - EXTRACT(DATE FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888))FROM DUAL
+                         *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT SYSDATE - EXTRACT(DATE FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888));
+SELECT SYSDATE - EXTRACT(DATE FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888))
+                         *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT SYSDATE - EXTRACT(DATE FROM FI WHERE (CAS=11) AND (DNI=8888))FROM PLAN_DOCENTE;
+SELECT SYSDATE - EXTRACT(DATE FROM FI WHERE (CAS=11) AND (DNI=8888))FROM PLAN_DOCENTE
+                         *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT SYSDATE - EXTRACT(SELECT FI WHERE (CAS=11) AND (DNI=8888)FROM PLAN_DOCENTE);
+SELECT SYSDATE - EXTRACT(SELECT FI WHERE (CAS=11) AND (DNI=8888)FROM PLAN_DOCENTE)
+                         *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT SYSDATE - EXTRACT(SELECT FI WHERE (CAS=11) AND (DNI=8888)FROM PLAN_DOCENTE) FROM DUAL;
+SELECT SYSDATE - EXTRACT(SELECT FI WHERE (CAS=11) AND (DNI=8888)FROM PLAN_DOCENTE) FROM DUAL
+                         *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT FI WHERE (CAS=11) AND (DNI=8888)FROM PLAN_DOCENTE);
+SELECT FI WHERE (CAS=11) AND (DNI=8888)FROM PLAN_DOCENTE)
+          *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT FI WHERE (CAS=11) AND (DNI=8888)FROM PLAN_DOCENTE;
+SELECT FI WHERE (CAS=11) AND (DNI=8888)FROM PLAN_DOCENTE
+          *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT FI FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888);
+
+FI                                                                                                                                  
+---------                                                                                                                           
+01-SEP-09                                                                                                                           
+
+SQL> SELECT SYSDATE - (SELECT FI FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888));
+SELECT SYSDATE - (SELECT FI FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888))
+                                                                           *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT SYSDATE - TO_DATE(SELECT FI FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888));
+SELECT SYSDATE - TO_DATE(SELECT FI FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888))
+                         *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT SYSDATE - FI FROM PLAN_DOCENTE WHERE (CAS=11) AND (DNI=8888);
+
+SYSDATE-FI                                                                                                                          
+----------                                                                                                                          
+2997.58258                                                                                                                          
+
+SQL> ALTR TABLE DEPARTAMENTO MODIFY(D1 VARCHAR(60);
+SP2-0734: unknown command beginning "ALTR TABLE..." - rest of line ignored.
+SQL> ALTER TABLE DEPARTAMENTO MODIFY(D1 VARCHAR(60);
+ALTER TABLE DEPARTAMENTO MODIFY(D1 VARCHAR(60)
+                                             *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ALTER TABLE DEPARTAMENTO MODIFY(D1 VARCHAR(60));
+ALTER TABLE DEPARTAMENTO MODIFY(D1 VARCHAR(60))
+                                *
+ERROR at line 1:
+ORA-00904: "D1": invalid identifier 
+
+
+SQL> ALTER TABLE DEPARTAMENTO MODIFY(D VARCHAR(60));
+
+Table altered.
+
+SQL> SPOOL OFF;
