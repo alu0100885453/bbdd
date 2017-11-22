@@ -203,3 +203,356 @@ SQL> SELECT DNI FROM PROFESOR WHERE (P NOT LIKE '______%');
 6 rows selected.
 
 SQL> SPOOL OFF
+SQL> LS
+SP2-0042: unknown command "LS" - rest of line ignored.
+SQL> SPOOL
+currently spooling to PRACT5.lst
+SQL> SELECT P
+  2  FROM PROFESOR NATURAL JOIN PLAN_DOCENTE
+  3  WHERE FF IS NULL;
+
+P                                                                               
+------------------------------------------------------------                    
+DAVID                                                                           
+JUAN                                                                            
+SOLEDAD                                                                         
+CARLOS                                                                          
+JOSE MANUEL                                                                     
+PEDRO                                                                           
+PEDRO                                                                           
+MARIA                                                                           
+MARIA                                                                           
+IVAN                                                                            
+MARIO                                                                           
+
+P                                                                               
+------------------------------------------------------------                    
+FRANCISCO                                                                       
+ANGELA                                                                          
+
+13 rows selected.
+
+SQL> SELECT P
+  2  FROM PROFESOR NATURAL JOIN PLAN_DOCENTE
+  3  WHERE CAS=8;
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+JUAN                                                                            
+JOSE MANUEL                                                                     
+
+SQL> SELECT P
+  2  FROM PROFESOR NATURAL JOIN PLAN_DOCENTE
+  3  WHERE CAS=8
+  4  GROUP BY P;
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+JOSE MANUEL                                                                     
+
+SQL> SELECT *
+  2  FROM PLAN_DOCENTE
+  3  ORDER BY FF;
+
+       DNI        CAS        CTA        CPA        CLA FI        FF             
+---------- ---------- ---------- ---------- ---------- --------- ---------      
+      2222          3        1.5          0        1.5 01-SEP-06 31-AUG-07      
+      1010          2        1.5        1.5          3 01-SEP-05 31-AUG-08      
+      1010          9          3          0          3 01-SEP-08 31-AUG-09      
+      1111          8          3        1.5        1.5 01-SEP-07 31-AUG-09      
+      4444          4        1.5          0        1.5 01-SEP-08 31-AUG-10      
+      6666         10          3        1.5        1.5 01-SEP-08 31-AUG-11      
+      1010          9        1.5          0        1.5 01-SEP-09                
+      9999          7          3          3          0 01-SEP-10                
+      5555          6          3          3          0 31-MAR-10                
+      8888         11          6          0          0 01-SEP-09                
+      2020          3        1.5          0        1.5 01-SEP-08                
+
+       DNI        CAS        CTA        CPA        CLA FI        FF             
+---------- ---------- ---------- ---------- ---------- --------- ---------      
+      7777         12        4.5          3          0 01-SEP-10                
+      3333          9        1.5          0        1.5 01-SEP-09                
+      2222          4        1.5          0        1.5 01-SEP-09                
+      3030          8          0        1.5        1.5 01-SEP-09                
+      1111          8          3          0          0 01-SEP-09                
+      4444          5          3          0          0 01-SEP-10                
+      4444          1          3        1.5        1.5 01-SEP-11                
+      3333          2        1.5        1.5          3 01-SEP-08                
+
+19 rows selected.
+
+SQL> SELECT *
+  2  FROM PLAN_DOCENTE
+  3  ORDER BY FF DESC;
+
+       DNI        CAS        CTA        CPA        CLA FI        FF             
+---------- ---------- ---------- ---------- ---------- --------- ---------      
+      4444          1          3        1.5        1.5 01-SEP-11                
+      3333          2        1.5        1.5          3 01-SEP-08                
+      7777         12        4.5          3          0 01-SEP-10                
+      2020          3        1.5          0        1.5 01-SEP-08                
+      8888         11          6          0          0 01-SEP-09                
+      5555          6          3          3          0 31-MAR-10                
+      9999          7          3          3          0 01-SEP-10                
+      4444          5          3          0          0 01-SEP-10                
+      1111          8          3          0          0 01-SEP-09                
+      3030          8          0        1.5        1.5 01-SEP-09                
+      2222          4        1.5          0        1.5 01-SEP-09                
+
+       DNI        CAS        CTA        CPA        CLA FI        FF             
+---------- ---------- ---------- ---------- ---------- --------- ---------      
+      3333          9        1.5          0        1.5 01-SEP-09                
+      1010          9        1.5          0        1.5 01-SEP-09                
+      6666         10          3        1.5        1.5 01-SEP-08 31-AUG-11      
+      4444          4        1.5          0        1.5 01-SEP-08 31-AUG-10      
+      1010          9          3          0          3 01-SEP-08 31-AUG-09      
+      1111          8          3        1.5        1.5 01-SEP-07 31-AUG-09      
+      1010          2        1.5        1.5          3 01-SEP-05 31-AUG-08      
+      2222          3        1.5          0        1.5 01-SEP-06 31-AUG-07      
+
+19 rows selected.
+
+SQL> SELECT P
+  2  FROM PROFESOR NATURAL JOIN PLAN_DOCENTE
+  3  WHERE CAS IN(SELECT CAS FROM ASIGNATURA WHERE A = 'OPTIMIZACION' AND T='GII') ORDER BY P ASC;
+
+P                                                                               
+------------------------------------------------------------                    
+JOSE MANUEL                                                                     
+JUAN                                                                            
+JUAN                                                                            
+
+SQL> SELECT P
+  2  FROM PROFESOR
+  3  WHERE IN(SELECT CAR
+  4  FROM AREA
+  5  WHERE AR = 'MATEMATICA FUNDAMENTAL') ORDER BY P DESC;
+WHERE IN(SELECT CAR
+      *
+ERROR at line 3:
+ORA-00936: missing expression 
+
+
+SQL> SELECT P
+  2  FROM PROFESOR
+  3  WHERE IN(SELECT CAR
+  4  FROM AREA
+  5  WHERE IN( SELECT CD
+  6  FROM DEPARTAMENTO
+  7  WHERE D='MATEMATICA FUNDAMENTAL')) ORDER BY P DESC;
+WHERE IN(SELECT CAR
+      *
+ERROR at line 3:
+ORA-00936: missing expression 
+
+
+SQL> SELECT P
+  2  FROM PROFESOR
+  3  WHERE CAR IN(SELECT CAR
+  4  FROM AREA
+  5  WHERE CD IN( SELECT CD
+  6  FROM DEPARTAMENTO
+  7  WHERE D='MATEMATICA FUNDAMENTAL')) ORDER BY P DESC;
+
+P                                                                               
+------------------------------------------------------------                    
+IVAN                                                                            
+
+SQL> SELECT A
+  2  FROM ASIGNATURA
+  3  WHERE CAS ;
+WHERE CAS 
+         *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT A
+  2  FROM ASIGNATURA NATURAL JOIN PLAN_DOCENTE
+  3  WHERE DNI = 1010;
+
+A                                                                               
+--------------------------------------------------                              
+INTELIGENCIA ARTIFICIAL                                                         
+GESTION DE RIESGOS                                                              
+GESTION DE RIESGOS                                                              
+
+SQL> SELECT A
+  2  FROM ASIGNATURA NATURAL JOIN PLAN_DOCENTE
+  3  WHERE DNI IN(SELECT DNI
+  4  FROM PROFESOR
+  5  WHERE P ='DAVID');
+
+A                                                                               
+--------------------------------------------------                              
+INTELIGENCIA ARTIFICIAL                                                         
+GESTION DE RIESGOS                                                              
+GESTION DE RIESGOS                                                              
+
+SQL> SELECT AR
+  2  FROM AREA
+  3  ;
+
+AR                                                                              
+------------------------------------------------------------                    
+ALGEBRA                                                                         
+ASTRONOMIA Y ASTROFISICA                                                        
+ANALISIS MATEMATICO                                                             
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                            
+DIDADICA DE LA MATEMATICA                                                       
+ESTADISTICA E INVESTIGACION OPERATIVA                                           
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+MATEMATICA APLICADA                                                             
+
+8 rows selected.
+
+SQL> SELECT AR
+  2  FROM AREA NATURAL JOIN DEPARTAMENTO
+  3  WHERE D = 'ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION';
+
+AR                                                                              
+------------------------------------------------------------                    
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                            
+ESTADISTICA E INVESTIGACION OPERATIVA                                           
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+
+SQL> SELECT A
+  2  FROM ASIGNATURA NATURAL JOIN PLAN_DOCENTE
+  3  WHERE DNI IN(SELECT DNI
+  4  FROM PROFESOR
+  5  WHERE CAT = 'CU') AND FF IN NULL;
+
+no rows selected
+
+SQL> SELECT A
+  2  FROM ASIGNATURA NATURAL JOIN PLAN_DOCENTE
+  3  WHERE DNI IN(SELECT DNI
+  4  FROM PROFESOR
+  5  WHERE CAT = 'CU') AND FF IS NULL;
+
+A                                                                               
+--------------------------------------------------                              
+OPTIMIZACION                                                                    
+ALMACENES DE DATOS                                                              
+
+SQL> SELECT A
+  2  FROM ASIGNATURA NATURAL JOIN PLAN_DOCENTE
+  3  WHERE DNI IN(SELECT DNI
+  4  FROM PROFESOR
+  5  WHERE NOT CAT != 'CU');
+
+A                                                                               
+--------------------------------------------------                              
+ALMACENES DE DATOS                                                              
+OPTIMIZACION                                                                    
+OPTIMIZACION                                                                    
+
+SQL> SELECT A
+  2  FROM ASIGNATURA NATURAL JOIN PLAN_DOCENTE
+  3  WHERE DNI NOT IN(SELECT DNI
+  4  WHERE NOT CAT != 'CU');
+WHERE NOT CAT != 'CU')
+*
+ERROR at line 4:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT A
+  2  FROM ASIGNATURA NATURAL JOIN PLAN_DOCENTE
+  3  WHERE DNI NOT IN(SELECT DNI
+  4  FROM PROFESOR
+  5  WHERE CAT != 'CU');
+
+A                                                                               
+--------------------------------------------------                              
+OPTIMIZACION                                                                    
+OPTIMIZACION                                                                    
+ALMACENES DE DATOS                                                              
+
+SQL> SELECT A
+  2  FROM ASIGNATURA
+  3  WHERE CAS NOT IN(SELECT CAS
+  4  FROM PLNA_DOCENTE NATURAL JOIN PROFESOR
+  5  WHERE CAT!='CU');
+FROM PLNA_DOCENTE NATURAL JOIN PROFESOR
+     *
+ERROR at line 4:
+ORA-00942: table or view does not exist 
+
+
+SQL> EDIT
+Wrote file afiedt.buf
+
+  1  SELECT A
+  2  FROM ASIGNATURA
+  3  WHERE CAS NOT IN(SELECT CAS
+  4  FROM PLAN_DOCENTE NATURAL JOIN PROFESOR
+  5* WHERE CAT!='CU')
+SQL> 
+SQL> 
+SQL>   2  FROM ASIGNATURA
+SQL>   3  WHERE CAS NOT IN(SELECT CAS
+SQL>   4  FROM PLAN_DOCENTE NATURAL JOIN PROFESOR
+SQL>   5* WHERE CAT!='CU')
+SP2-0734: unknown command beginning "5* WHERE C..." - rest of line ignored.
+SQL> buffer
+SP2-0042: unknown command "buffer" - rest of line ignored.
+SQL> BUFFER
+SP2-0042: unknown command "BUFFER" - rest of line ignored.
+SQL> LIST
+  1  SELECT A
+  2   FROM ASIGNATURA
+  3   WHERE CAS NOT IN(SELECT CAS
+  4   FROM PLAN_DOCENTE NATURAL JOIN PROFESOR
+  5* WHERE CAT!='CU')
+SQL> EDIT
+Wrote file afiedt.buf
+
+  1  SELECT A
+  2   FROM ASIGNATURA
+  3   WHERE CAS NOT IN(SELECT CAS
+  4   FROM PLAN_DOCENTE NATURAL JOIN PROFESOR
+  5*  WHERE CAT!='CU');
+SQL> list
+  1  SELECT A
+  2   FROM ASIGNATURA
+  3   WHERE CAS NOT IN(SELECT CAS
+  4   FROM PLAN_DOCENTE NATURAL JOIN PROFESOR
+  5*  WHERE CAT!='CU');
+SQL> /
+ WHERE CAT!='CU');
+                 *
+ERROR at line 5:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> EDIT
+Wrote file afiedt.buf
+
+  1  SELECT A
+  2   FROM ASIGNATURA
+  3   WHERE CAS NOT IN(SELECT CAS
+  4   FROM PLAN_DOCENTE NATURAL JOIN PROFESOR
+  5*  WHERE CAT != 'CU');
+SQL> /
+ WHERE CAT != 'CU');
+                   *
+ERROR at line 5:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT A
+  2  FROM ASIGNATURA
+  3  WHERE CAS NOT IN(SELECT CAS
+  4  FROM PLAN_DOCENTE NATURAL JOIN PROFESOR
+  5  WHERE CAT != 'CU');
+
+no rows selected
+
+SQL> /
+
+no rows selected
+
+SQL> SPOOL OFF
