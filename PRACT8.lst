@@ -1,0 +1,377 @@
+SQL> SELECT TABLE_NAME, CONSTRAINT NAME
+  2  FROM USER_CONSTRAINTS;
+SELECT TABLE_NAME, CONSTRAINT NAME
+                   *
+ERROR at line 1:
+ORA-00904: "CONSTRAINT": invalid identifier 
+
+
+SQL> SELECT TABLE_NAME, CONSTRAINT_NAME
+  2  FROM USER_CONSTRAINTS;
+
+TABLE_NAME                                                                      
+--------------------------------------------------------------------------------
+CONSTRAINT_NAME                                                                 
+--------------------------------------------------------------------------------
+AREA                                                                            
+SYS_C0017716                                                                    
+                                                                                
+PROFESOR                                                                        
+SYS_C0017813                                                                    
+                                                                                
+ASIGNATURA                                                                      
+SYS_C0017836                                                                    
+                                                                                
+
+TABLE_NAME                                                                      
+--------------------------------------------------------------------------------
+CONSTRAINT_NAME                                                                 
+--------------------------------------------------------------------------------
+ASIGNATURA                                                                      
+SYS_C0017837                                                                    
+                                                                                
+ASIGNATURA                                                                      
+SYS_C0017838                                                                    
+                                                                                
+ASIGNATURA                                                                      
+SYS_C0017840                                                                    
+                                                                                
+
+TABLE_NAME                                                                      
+--------------------------------------------------------------------------------
+CONSTRAINT_NAME                                                                 
+--------------------------------------------------------------------------------
+PLAN_DOCENTE                                                                    
+SYS_C0017846                                                                    
+                                                                                
+PLAN_DOCENTE                                                                    
+SYS_C0017848                                                                    
+                                                                                
+PLAN_DOCENTE                                                                    
+SYS_C0017849                                                                    
+                                                                                
+
+TABLE_NAME                                                                      
+--------------------------------------------------------------------------------
+CONSTRAINT_NAME                                                                 
+--------------------------------------------------------------------------------
+DEPARTAMENTO                                                                    
+SYS_C0017665                                                                    
+                                                                                
+AREA                                                                            
+SYS_C0017715                                                                    
+                                                                                
+PROFESOR                                                                        
+SYS_C0017812                                                                    
+                                                                                
+
+TABLE_NAME                                                                      
+--------------------------------------------------------------------------------
+CONSTRAINT_NAME                                                                 
+--------------------------------------------------------------------------------
+ASIGNATURA                                                                      
+SYS_C0017839                                                                    
+                                                                                
+PLAN_DOCENTE                                                                    
+SYS_C0017847                                                                    
+                                                                                
+
+14 rows selected.
+
+SQL> SET LINESIZE 200;
+SQL> SELECT TABLE_NAME, CONSTRAINT_NAME
+  2  FROM USER_CONSTRAINTS;
+
+TABLE_NAME                                                                                                                                                                                              
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+CONSTRAINT_NAME                                                                                                                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+AREA                                                                                                                                                                                                    
+SYS_C0017716                                                                                                                                                                                            
+                                                                                                                                                                                                        
+PROFESOR                                                                                                                                                                                                
+SYS_C0017813                                                                                                                                                                                            
+                                                                                                                                                                                                        
+ASIGNATURA                                                                                                                                                                                              
+SYS_C0017836                                                                                                                                                                                            
+                                                                                                                                                                                                        
+
+TABLE_NAME                                                                                                                                                                                              
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+CONSTRAINT_NAME                                                                                                                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+ASIGNATURA                                                                                                                                                                                              
+SYS_C0017837                                                                                                                                                                                            
+                                                                                                                                                                                                        
+ASIGNATURA                                                                                                                                                                                              
+SYS_C0017838                                                                                                                                                                                            
+                                                                                                                                                                                                        
+ASIGNATURA                                                                                                                                                                                              
+SYS_C0017840                                                                                                                                                                                            
+                                                                                                                                                                                                        
+
+TABLE_NAME                                                                                                                                                                                              
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+CONSTRAINT_NAME                                                                                                                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+PLAN_DOCENTE                                                                                                                                                                                            
+SYS_C0017846                                                                                                                                                                                            
+                                                                                                                                                                                                        
+PLAN_DOCENTE                                                                                                                                                                                            
+SYS_C0017848                                                                                                                                                                                            
+                                                                                                                                                                                                        
+PLAN_DOCENTE                                                                                                                                                                                            
+SYS_C0017849                                                                                                                                                                                            
+                                                                                                                                                                                                        
+
+TABLE_NAME                                                                                                                                                                                              
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+CONSTRAINT_NAME                                                                                                                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+DEPARTAMENTO                                                                                                                                                                                            
+SYS_C0017665                                                                                                                                                                                            
+                                                                                                                                                                                                        
+AREA                                                                                                                                                                                                    
+SYS_C0017715                                                                                                                                                                                            
+                                                                                                                                                                                                        
+PROFESOR                                                                                                                                                                                                
+SYS_C0017812                                                                                                                                                                                            
+                                                                                                                                                                                                        
+
+TABLE_NAME                                                                                                                                                                                              
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+CONSTRAINT_NAME                                                                                                                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------                                                                        
+ASIGNATURA                                                                                                                                                                                              
+SYS_C0017839                                                                                                                                                                                            
+                                                                                                                                                                                                        
+PLAN_DOCENTE                                                                                                                                                                                            
+SYS_C0017847                                                                                                                                                                                            
+                                                                                                                                                                                                        
+
+14 rows selected.
+
+SQL> CREATE TABLE TITULACION(
+  2  T CHAR(4) NOT NULL,
+  3  FAC VARCHAR2(50) EWAFIHQWEJIF;
+FAC VARCHAR2(50) EWAFIHQWEJIF
+                 *
+ERROR at line 3:
+ORA-00907: missing right parenthesis 
+
+
+SQL> CREATE TABLE TITULACION(
+  2  T CHAR(4) PRIMARY KEY,
+  3  FAC VARCHAR2(50));
+
+Table created.
+
+SQL> INSERT INTO TITULACION
+  2  VALUES (SELECT DISTINCT T FROM ASIGNATURA);
+VALUES (SELECT DISTINCT T FROM ASIGNATURA)
+        *
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> INSERT INTO TITULACION
+  2  SELECT DISTINCT T FROM ASIGNATURA;
+INSERT INTO TITULACION
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> INSERT INTO TITULACION (T)
+  2  SELECT DISTINCT T FROM ASIGNATURA;
+
+4 rows created.
+
+SQL> SELECT * FROM TITULACION;
+
+T    FAC                                                                                                                                                                                                
+---- --------------------------------------------------                                                                                                                                                 
+GF                                                                                                                                                                                                      
+GM                                                                                                                                                                                                      
+GII                                                                                                                                                                                                     
+MII                                                                                                                                                                                                     
+
+SQL> UPDATE TITULACION
+  2  SET FAC=&FACULTAD
+  3  WHERE T=&TITULACION;
+Enter value for facultad: ETSII
+old   2: SET FAC=&FACULTAD
+new   2: SET FAC=ETSII
+Enter value for titulacion: GII
+old   3: WHERE T=&TITULACION
+new   3: WHERE T=GII
+WHERE T=GII
+        *
+ERROR at line 3:
+ORA-00904: "GII": invalid identifier 
+
+
+SQL> SELECT * FROM TITULACION;
+
+T    FAC                                                                                                                                                                                                
+---- --------------------------------------------------                                                                                                                                                 
+GF                                                                                                                                                                                                      
+GM                                                                                                                                                                                                      
+GII                                                                                                                                                                                                     
+MII                                                                                                                                                                                                     
+
+SQL> UPDATE TITULACION
+  2  SET FAC=&FACULTAD
+  3  WHERE T=&TITULACIO;
+Enter value for facultad: ETSII
+old   2: SET FAC=&FACULTAD
+new   2: SET FAC=ETSII
+Enter value for titulacio: GII
+old   3: WHERE T=&TITULACIO
+new   3: WHERE T=GII
+WHERE T=GII
+        *
+ERROR at line 3:
+ORA-00904: "GII": invalid identifier 
+
+
+SQL> /
+Enter value for facultad: 'ETSII'
+old   2: SET FAC=&FACULTAD
+new   2: SET FAC='ETSII'
+Enter value for titulacio: 'GII'
+old   3: WHERE T=&TITULACIO
+new   3: WHERE T='GII'
+
+1 row updated.
+
+SQL> SELECT * FROM TITULACION;
+
+T    FAC                                                                                                                                                                                                
+---- --------------------------------------------------                                                                                                                                                 
+GF                                                                                                                                                                                                      
+GM                                                                                                                                                                                                      
+GII  ETSII                                                                                                                                                                                              
+MII                                                                                                                                                                                                     
+
+SQL> /
+
+T    FAC                                                                                                                                                                                                
+---- --------------------------------------------------                                                                                                                                                 
+GF                                                                                                                                                                                                      
+GM                                                                                                                                                                                                      
+GII  ETSII                                                                                                                                                                                              
+MII                                                                                                                                                                                                     
+
+SQL> UPDATE TITULACION
+  2  SET FAC=&FACULTAD
+  3  WHERE T=&TITULACIO;
+Enter value for facultad: 'ETSII'
+old   2: SET FAC=&FACULTAD
+new   2: SET FAC='ETSII'
+Enter value for titulacio: 'MII'
+old   3: WHERE T=&TITULACIO
+new   3: WHERE T='MII'
+
+1 row updated.
+
+SQL> /
+Enter value for facultad: 'FAC. MAT Y FIS'
+old   2: SET FAC=&FACULTAD
+new   2: SET FAC='FAC. MAT Y FIS'
+Enter value for titulacio: 'GF'
+old   3: WHERE T=&TITULACIO
+new   3: WHERE T='GF'
+
+1 row updated.
+
+SQL> /
+Enter value for facultad: 'FAC. MAT Y FIS'
+old   2: SET FAC=&FACULTAD
+new   2: SET FAC='FAC. MAT Y FIS'
+Enter value for titulacio: 'GM'
+old   3: WHERE T=&TITULACIO
+new   3: WHERE T='GM'
+
+1 row updated.
+
+SQL> SELECT * FROM TITULACION;
+
+T    FAC                                                                                                                                                                                                
+---- --------------------------------------------------                                                                                                                                                 
+GF   FAC. MAT Y FIS                                                                                                                                                                                     
+GM   FAC. MAT Y FIS                                                                                                                                                                                     
+GII  ETSII                                                                                                                                                                                              
+MII  ETSII                                                                                                                                                                                              
+
+SQL> CREATE SYNONYM TIT FROM TITULACION;
+CREATE SYNONYM TIT FROM TITULACION
+                   *
+ERROR at line 1:
+ORA-00905: missing keyword 
+
+
+SQL> CREATE SYNONYM TIT FOR TITULACION;
+
+Synonym created.
+
+SQL> ALTER TABLE ASIGNATURA
+  2  ADD T_CASCADA
+  3  FD;
+FD
+*
+ERROR at line 3:
+ORA-00902: invalid datatype 
+
+
+SQL> ALTER TABLE ASIGNATURA
+  2  CONSTRAINT T_CASCADA
+  3  FASDF;
+CONSTRAINT T_CASCADA
+*
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ALTER TABLE ASIGNATURA
+  2  CONSTRAINT T_CASCADA FORING KEY(T) REFERENCES
+  3  TITULACION(T) ON DELETE CASCADE;
+CONSTRAINT T_CASCADA FORING KEY(T) REFERENCES
+*
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ALTER TABLE ASIGNATURA
+  2  ADD CONSTRAINT T_CASCADA FORING KEY(T) REFERENCES
+  3  TITULACION(T) ON DELETE CASCADE;
+ADD CONSTRAINT T_CASCADA FORING KEY(T) REFERENCES
+                                    *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ALTER TABLE ASIGNATURA
+  2  ADD CONSTRAINT T_CASCADA FOREING KEY(T) REFERENCES
+  3  TITULACION(T) ON DELETE CASCADE;
+ADD CONSTRAINT T_CASCADA FOREING KEY(T) REFERENCES
+                                     *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ALTER TABLE ASIGNATURA
+  2  ADD CONSTRAINT T_CASCADA FOREIGN KEY(T) REFERENCES
+  3  TITULACION(T) ON DELETE CASCADE;
+
+Table altered.
+
+SQL> ALTER TABLE TITULACION
+  2  MODIFY (T CHAR(6));
+ALTER TABLE TITULACION
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (ALU0100885453.T_CASCADA) violated - child record found 
+
+
+SQL> SPOOL OFF
