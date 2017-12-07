@@ -934,3 +934,28 @@ IVAN
 14 rows selected.
 
 SQL> SPOOL OFF
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE '_____%';
+
+       DNI                                                                      
+----------                                                                      
+      2222                                                                      
+      3333                                                                      
+      4444                                                                      
+      6666                                                                      
+      7777                                                                      
+      8888                                                                      
+      9999                                                                      
+      1010                                                                      
+      2020                                                                      
+      3030                                                                      
+      4040                                                                      
+
+       DNI                                                                      
+----------                                                                      
+      5050                                                                      
+
+12 rows selected.
+
+SQL> SPOOL OFF
