@@ -783,3 +783,244 @@ ALMACENES DE DATOS
 MINERIA DE DATOS                                                                
 
 SQL> SPOOL OFF
+SQL> SELECT AR
+  2  FROM AREA NATURAL JOIN ASIGNATURA
+  3  WHERE (CT + CP + CL) = SELECT MIN(CT + CP + CL)
+  4  FROM ASIGNATURA;
+WHERE (CT + CP + CL) = SELECT MIN(CT + CP + CL)
+                       *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT AR
+  2  FROM AREA NATURAL JOIN ASIGNATURA
+  3  WHERE (CT + CP + CL) = (SELECT MIN(CT + CP + CL)
+  4* FROM ASIGNATURA)
+SQL> /
+
+AR                                                                              
+------------------------------------------------------------                    
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT AR
+  2  FROM AREA NATURAL JOIN ASIGNATURA
+  3  WHERE (CT + CP + CL) = (SELECT MAX(CT + CP + CL)
+  4* FROM ASIGNATURA)
+SQL> /
+
+AR                                                                              
+------------------------------------------------------------                    
+ANALISIS MATEMATICO                                                             
+
+SQL> SELECT COUNT CAS
+  2  FROM ASIGNATURA
+  3  WHERE CAS IN (SELECT CAS
+  4  FROM PLAN DOCENTE
+  5  WHERE DNI='1111');
+SELECT COUNT CAS
+       *
+ERROR at line 1:
+ORA-00904: "COUNT": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(CAS)
+  2  FROM ASIGNATURA
+  3  WHERE CAS IN (SELECT CAS
+  4  FROM PLAN DOCENTE
+  5* WHERE DNI='1111')
+SQL> /
+FROM PLAN DOCENTE
+     *
+ERROR at line 4:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(CAS)
+  2  FROM ASIGNATURA
+  3  WHERE CAS IN (SELECT CAS
+  4  FROM PLAN_DOCENTE
+  5* WHERE DNI='1111')
+SQL> /
+
+COUNT(CAS)                                                                      
+----------                                                                      
+         1                                                                      
+
+SQL> SELECT SUM(CTA + CPA + CLA)
+  2  FROM PLAN_DOCENTE
+  3  WHERE DNI ='1111';
+
+SUM(CTA+CPA+CLA)                                                                
+----------------                                                                
+               9                                                                
+
+SQL> SELECT P
+  2  FROM PROFESOR
+  3  
+SQL> SELECT P
+  2  FROM PROFESOR NATURAL JOIN PLAN_DOCENTE
+  3  WHERE FF IS NULL
+  4  GROUP BY P, DNI;
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+CARLOS                                                                          
+PEDRO                                                                           
+MARIA                                                                           
+IVAN                                                                            
+MARIO                                                                           
+FRANCISCO                                                                       
+ANGELA                                                                          
+DAVID                                                                           
+SOLEDAD                                                                         
+JOSE MANUEL                                                                     
+
+11 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT P
+  2  FROM PROFESOR NATURAL JOIN PLAN_DOCENTE
+  3  WHERE FF IS NULL
+  4  GROUP BY P, DNI
+  5  HAVING SUM(CTA+CPA+CLA) >= ALL (SELECT SUM(CTA+CPA+CLA)
+  6  FROM PLAN_DOCENTE
+  7  WHERE FF IS NULL
+  8* GROUP BY DNI)
+SQL> /
+
+P                                                                               
+------------------------------------------------------------                    
+MARIA                                                                           
+PEDRO                                                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SUM(CTA+CPA+CLA)
+  2  FROM PLAN_DOCENTE
+  3  WHERE FF IS NULL
+  4* GROUP BY DNI
+SQL> /
+
+SUM(CTA+CPA+CLA)                                                                
+----------------                                                                
+               3                                                                
+               3                                                                
+               3                                                                
+               3                                                                
+               3                                                                
+               9                                                                
+               9                                                                
+               6                                                                
+             7.5                                                                
+               6                                                                
+               6                                                                
+
+11 rows selected.
+
+SQL> SELECT AVG(COUNT(CAS))
+  2  FROM ASIGNATURA
+  3  GROPU BY CAR;
+GROPU BY CAR
+      *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT AVG(COUNT(CAS))
+  2  FROM ASIGNATURA
+  3* GROUP BY CAR
+SQL> 
+SQL> /
+
+AVG(COUNT(CAS))                                                                 
+---------------                                                                 
+            1.5                                                                 
+
+SQL> SELECT AVG(COUNT(DNI))
+  2  FROM PROFESOR NATURAL JOIN AREA
+  3  GROUP BY CD;
+
+AVG(COUNT(DNI))                                                                 
+---------------                                                                 
+            3.5                                                                 
+
+SQL> SELECT AR
+  2  FROM AREA
+  3  WHERE 3 < (SELECT ;
+WHERE 3 < (SELECT 
+           *
+ERROR at line 3:
+ORA-00921: unexpected end of SQL command 
+
+
+SQL> SELECT AR
+  2  FROM AREA NATURAL JOIN ASIGNATURA
+  3  GROUP BY AR
+  4  HAVING COUNT(CAS) >3;
+
+AR                                                                              
+------------------------------------------------------------                    
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT AR
+  2  FROM AREA NATURAL JOIN ASIGNATURA
+  3  GROUP BY AR
+  4* HAVING COUNT(CAS) >6
+SQL> /
+
+no rows selected
+
+SQL> SELECT D
+  2  FROM DEPARTAMENTO NATURAL JOIN AREA, PROFESOR
+  3  GROUP BY D
+  4  HAVING COUNT(P) <= (SELECT MIN(COUNT(P))
+  5  FROM DEPARTAMENTO NATURAL JOIN AREA, PROFESOR
+  6  GROUP BY D);
+
+D                                                                               
+------------------------------------------------------------                    
+ASTROFISICA                                                                     
+MATEMATICA FUNDAMENTAL                                                          
+
+SQL> SPOOL OFF
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT D
+  2  FROM DEPARTAMENTO NATURAL JOIN AREA, PROFESOR
+  3  GROUP BY D
+  4  HAVING COUNT(DNI) <= (SELECT MIN(COUNT(DNI))
+  5  FROM PROFESOR NATURAL JOIN AREA
+  6* GROUP BY D)
+SQL> /
+
+D                                                                               
+------------------------------------------------------------                    
+ASTROFISICA                                                                     
+MATEMATICA FUNDAMENTAL                                                          
+
+SQL> SPOOL OFF
