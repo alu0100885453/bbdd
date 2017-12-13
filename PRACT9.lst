@@ -1,0 +1,617 @@
+SQL> SET SERVEROUTPUT ON
+SQL> /
+HOLA MUNDO                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> SAVE HOLAMUNDO
+Created file HOLAMUNDO.sql
+SQL> GET HOLAMUNDO
+  1  BEGIN
+  2  DBMS_OUTPUT.PUT_LINE('HOLA MUNDO');
+  3* END;
+SQL> RUN
+  1  BEGIN
+  2  DBMS_OUTPUT.PUT_LINE('HOLA MUNDO');
+  3* END;
+HOLA MUNDO                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> @HOLAMUNDO
+HOLA MUNDO                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE PROCEDURE HOLAMUNDO IS
+  2  BEGIN
+  3  DBMS_OUTPUT.PUT_LINE('HOLA MUNDO');
+  4* END;
+SQL> /
+
+Procedure created.
+
+SQL> CALL HOLAMUNDO();
+HOLA MUNDO                                                                      
+
+Call completed.
+
+SQL> CALL HOLAMUNDO()
+  2  ;
+HOLA MUNDO                                                                      
+
+Call completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE FUNTION DOBLE(X NUMBER)
+  2  RETURN NUMBER IS
+  3  BEGIN
+  4  RETURN 2*X;
+  5* END;
+SQL> /
+CREATE FUNTION DOBLE(X NUMBER)
+       *
+ERROR at line 1:
+ORA-00901: invalid CREATE command 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE FUNCTION DOBLE(X NUMBER)
+  2  RETURN NUMBER IS
+  3  BEGIN
+  4  RETURN 2*X;
+  5* END;
+SQL> /
+
+Function created.
+
+SQL> CALL DOBLE(5);
+CALL DOBLE(5)
+     *
+ERROR at line 1:
+ORA-06576: not a valid function or procedure name 
+
+
+SQL> DOBLE(5);
+SP2-0042: unknown command "DOBLE(5)" - rest of line ignored.
+SQL> SELECT DOBLE(4) FROM DUAL;
+
+  DOBLE(4)                                                                      
+----------                                                                      
+         8                                                                      
+
+SQL> BEGIN
+  2  DBMS_OUTPUT.PUT_LINE(DOBLE(4));
+  3  END;
+  4  /
+8                                                                               
+
+PL/SQL procedure successfully completed.
+
+SQL> VARIABLE X NUMBER
+SQL> CALL DOUBLE(4);
+CALL DOUBLE(4)
+     *
+ERROR at line 1:
+ORA-06576: not a valid function or procedure name 
+
+
+SQL> CALL DOUBLE(4) INTO:X;
+CALL DOUBLE(4) INTO:X
+     *
+ERROR at line 1:
+ORA-06576: not a valid function or procedure name 
+
+
+SQL> CALL DOUBLE(4) INTO :X;
+CALL DOUBLE(4) INTO :X
+     *
+ERROR at line 1:
+ORA-06576: not a valid function or procedure name 
+
+
+SQL> CALL DOBLE(4) INTO :X;
+
+Call completed.
+
+SQL> PRINT X
+
+         X                                                                      
+----------                                                                      
+         8                                                                      
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE PROCEDURE NOMBRE(d PROFESOR.DNI%TYPE) IS
+  2  N PROFESOR.P%TYPE; --NOMBRE DEL PROFE
+  3  BEGIN
+  4  SELECT P 
+  5  INTO N
+  6  FROM PROFESOR
+  7  WHERE DNI=d;
+  8  DBMS_OUTPUT.PUTLINE('NOMBRE: '||N);
+  9* END;
+ 10  CALL(1111);
+ 11  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE PROCEDURE NOMBRE(d PROFESOR.DNI%TYPE) IS
+  2  N PROFESOR.P%TYPE; --NOMBRE DEL PROFE
+  3  BEGIN
+  4  SELECT P 
+  5  INTO N
+  6  FROM PROFESOR
+  7  WHERE DNI=d;
+  8  DBMS_OUTPUT.PUTLINE('NOMBRE: '||N);
+  9* END;
+SQL> CALL NOMBRE(1111);
+CALL NOMBRE(1111)
+     *
+ERROR at line 1:
+ORA-06575: Package or function NOMBRE is in an invalid state 
+
+
+SQL> CALL NOMBRE('1111');
+CALL NOMBRE('1111')
+     *
+ERROR at line 1:
+ORA-06575: Package or function NOMBRE is in an invalid state 
+
+
+SQL> /
+CALL NOMBRE('1111')
+     *
+ERROR at line 1:
+ORA-06575: Package or function NOMBRE is in an invalid state 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* CALL NOMBRE('1111')
+SQL> CREATE PROCEDURE NOMBRE(d PROFESOR.DNI%TYPE) IS
+  2    2  N PROFESOR.P%TYPE; --NOMBRE DEL PROFE
+  3    3  BEGIN
+  4    4  SELECT P
+  5    5  INTO N
+  6    6  FROM PROFESOR
+  7    7  WHERE DNI=d;
+  8    8  DBMS_OUTPUT.PUTLINE('NOMBRE: '||N);
+  9    9* END;
+ 10   /
+CREATE PROCEDURE NOMBRE(d PROFESOR.DNI%TYPE) IS
+                 *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE PROCEDURE NOMBRE(d PROFESOR.DNI%TYPE) IS
+  2  N PROFESOR.P%TYPE; --NOMBRE DEL PROFE
+  3    BEGIN
+  4    SELECT P
+  5    INTO N
+  6    FROM PROFESOR
+  7    WHERE DNI=d;
+  8    DBMS_OUTPUT.PUTLINE('NOMBRE: '||N);
+  9*  END;
+SQL> /
+CREATE PROCEDURE NOMBRE(d PROFESOR.DNI%TYPE) IS
+                 *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> CALL NOMBRE(1111);
+CALL NOMBRE(1111)
+     *
+ERROR at line 1:
+ORA-06575: Package or function NOMBRE is in an invalid state 
+
+
+SQL> CALL NOMBRE('1111');
+CALL NOMBRE('1111')
+     *
+ERROR at line 1:
+ORA-06575: Package or function NOMBRE is in an invalid state 
+
+
+SQL> SELECT DNI FROM PROFESOR
+  2  WHERE DNI=&P;
+Enter value for p: 1111
+old   2: WHERE DNI=&P
+new   2: WHERE DNI=1111
+
+       DNI                                                                      
+----------                                                                      
+      1111                                                                      
+
+SQL> SELECT P FROM PROFESOR
+  2  WHERE DNI=&P;
+Enter value for p: 1111
+old   2: WHERE DNI=&P
+new   2: WHERE DNI=1111
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+
+SQL> 
+SQL> 
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS 
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP 
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT;
+ 10  END LOOP;
+ 11  CLOSE C;
+ 12* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS 
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP 
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT;
+ 10  END LOOP;
+ 11  CLOSE C;
+ 12* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE MOSTRARPROFESORES:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+10/5     PLS-00103: Encountered the symbol "LOOP" when expecting one of         
+         the following:                                                         
+         if                                                                     
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS 
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP 
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT;
+ 10  ELSE DBMS_OUTPUT.PUT_LINE(fila.P);
+ 11  END LOOP;
+ 12  CLOSE C;
+ 13* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> CALL MOSTRARPROFESORES();
+CALL MOSTRARPROFESORES()
+     *
+ERROR at line 1:
+ORA-06575: Package or function MOSTRARPROFESORES is in an invalid state 
+
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE MOSTRARPROFESORES:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+11/5     PLS-00103: Encountered the symbol "LOOP" when expecting one of         
+         the following:                                                         
+         if                                                                     
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1* CALL MOSTRARPROFESORES()
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT
+ 10  ELSE DBMS_OUTPUT.PUT_LINE(fila.P);
+ 11  END LOOP;
+ 12  CLOSE C;
+ 13* END;
+ 14  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE MOSTRARPROFESORES:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+10/1     PLS-00103: Encountered the symbol "ELSE" when expecting one of         
+         the following:                                                         
+         ; when <an identifier> <a double-quoted delimited-identifier>          
+         The symbol ";" was substituted for "ELSE" to continue.                 
+                                                                                
+11/5     PLS-00103: Encountered the symbol "LOOP" when expecting one of         
+         the following:                                                         
+         if                                                                     
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT
+ 10  ELSE DBMS_OUTPUT.PUT_LINE(fila.P)
+ 11  END IF;
+ 12  END LOOP;
+ 13  CLOSE C;
+ 14* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE MOSTRARPROFESORES:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+10/1     PLS-00103: Encountered the symbol "ELSE" when expecting one of         
+         the following:                                                         
+         ; when <an identifier> <a double-quoted delimited-identifier>          
+         The symbol ";" was substituted for "ELSE" to continue.                 
+                                                                                
+11/1     PLS-00103: Encountered the symbol "END" when expecting one of the      
+         following:                                                             
+         := . ( % ;                                                             
+         The symbol ";" was substituted for "END" to continue.                  
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT;
+ 10  DBMS_OUTPUT.PUT_LINE(fila.P)
+ 11  END LOOP;
+ 12  CLOSE C;
+ 13* END;
+ 14  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE MOSTRARPROFESORES:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+11/1     PLS-00103: Encountered the symbol "END" when expecting one of the      
+         following:                                                             
+         := . ( % ;                                                             
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT;
+ 10  END IF;
+ 11  DBMS_OUTPUT.PUT_LINE(fila.P)
+ 12  END LOOP;
+ 13  CLOSE C;
+ 14* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE MOSTRARPROFESORES:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+12/1     PLS-00103: Encountered the symbol "END" when expecting one of the      
+         following:                                                             
+         := . ( % ;                                                             
+         The symbol ";" was substituted for "END" to continue.                  
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT
+ 10  END IF;
+ 11  DBMS_OUTPUT.PUT_LINE(fila.P)
+ 12  END LOOP;
+ 13  CLOSE C;
+ 14* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE MOSTRARPROFESORES:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+10/1     PLS-00103: Encountered the symbol "END" when expecting one of the      
+         following:                                                             
+         ; when <an identifier> <a double-quoted delimited-identifier>          
+         The symbol ";" was substituted for "END" to continue.                  
+                                                                                
+12/1     PLS-00103: Encountered the symbol "END" when expecting one of the      
+         following:                                                             
+         := . ( % ;                                                             
+         The symbol ";" was substituted for "END" to continue.                  
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT;
+ 10  DBMS_OUTPUT.PUT_LINE(fila.P)
+ 11  END LOOP;
+ 12  CLOSE C;
+ 13* END;
+ 14  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE MOSTRARPROFESORES:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+11/1     PLS-00103: Encountered the symbol "END" when expecting one of the      
+         following:                                                             
+         := . ( % ;                                                             
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT;
+ 10  END IF;
+ 11  DBMS_OUTPUT.PUT_LINE(fila.P||fila.DNI)
+ 12  END LOOP;
+ 13  CLOSE C;
+ 14* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE MOSTRARPROFESORES:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+12/1     PLS-00103: Encountered the symbol "END" when expecting one of the      
+         following:                                                             
+         := . ( % ;                                                             
+         The symbol ";" was substituted for "END" to continue.                  
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE MOSTRARPROFESORES IS
+  2  fila PROFESOR%ROWTYPE;
+  3  CURSOR C IS
+  4  SELECT * FROM PROFESOR;
+  5  BEGIN
+  6  OPEN C;
+  7  LOOP
+  8  FETCH C INTO fila;
+  9  IF C%NOTFOUND THEN EXIT;
+ 10  END IF;
+ 11  DBMS_OUTPUT.PUT_LINE(fila.P||fila.DNI);
+ 12  END LOOP;
+ 13  CLOSE C;
+ 14* END;
+SQL> /
+
+Procedure created.
+
+SQL> CALL MOSTRARPROFESORES();
+JUAN1111                                                                        
+CARLOS2222                                                                      
+PEDRO3333                                                                       
+MARIA4444                                                                       
+IVAN5555                                                                        
+CARMEN6666                                                                      
+MARIO7777                                                                       
+FRANCISCO8888                                                                   
+ANGELA9999                                                                      
+DAVID1010                                                                       
+SOLEDAD2020                                                                     
+JOSE MANUEL3030                                                                 
+CARMELO4040                                                                     
+CARINA5050                                                                      
+
+Call completed.
+
+SQL> SPOOL
+currently spooling to PRACT9.lst
+SQL> SPOOL OFF
