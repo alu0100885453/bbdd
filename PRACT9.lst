@@ -615,3 +615,103 @@ Call completed.
 SQL> SPOOL
 currently spooling to PRACT9.lst
 SQL> SPOOL OFF
+SQL> CONNECT alumno
+Connected.
+SQL> SPOOL
+currently spooling to PRACT9.lst
+SQL> SELECT *
+  2  FROM DEPARTAMENTO;
+
+        CD D                                                                    
+---------- ----------                                                           
+         1 prueba                                                               
+         5 ECONOMIA                                                             
+
+SQL> SELECT *
+  2  FROM alu0100885453.DEPARTAMENTO;
+
+        CD D                                                                    
+---------- ------------------------------------------------------------         
+         1 ANALISIS MATEMATICO                                                  
+         2 ASTROFISICA                                                          
+         3 ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                   
+         4 MATEMATICA FUNDAMENTAL                                               
+
+SQL> SELECT *
+  2  FROM alu0100885453.PROFESOR;
+FROM alu0100885453.PROFESOR
+                   *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> INSERT INTO alu0100885453.DEPARTAMENTO
+  2  VALUES(5, 'ECONOMIA');
+
+1 row created.
+
+SQL> UPDATE alu0100885453.DEPARTAMENTO
+  2  SET D='ECONOMIA APLICADA'
+  3  WHERE CD=5;
+
+1 row updated.
+
+SQL> UPDATE alu0100885453.TITULACION
+  2  SET FAC='ETSII'
+  3  WHERE T ='GII';
+
+1 row updated.
+
+SQL> DELETE FROM alu0100885453.TITULACION
+  2  WHERE T ='GII';
+DELETE FROM alu0100885453.TITULACION
+                          *
+ERROR at line 1:
+ORA-01031: insufficient privileges 
+
+
+SQL> ROLLBACK
+  2  ;
+
+Rollback complete.
+
+SQL> CREATE VIEW VISTA3 AS SELECT A, CAR
+  2  FROM alu0100885453.ASIGNATURA;
+
+View created.
+
+SQL> SELECT * FROM VISTA3;
+
+A                                                         CAR                   
+-------------------------------------------------- ----------                   
+BASES DE DATOS                                              7                   
+INTELIGENCIA ARTIFICIAL                                     4                   
+ALMACENES DE DATOS                                          7                   
+MINERIA DE DATOS                                            7                   
+INFORMATICA BASICA                                          7                   
+ALGEBRA                                                     1                   
+CALCULO                                                     8                   
+OPTIMIZACION                                                6                   
+GESTION DE RIESGOS                                          4                   
+ASTRONOMIA                                                  3                   
+ENSENANZA DE LA MATEMATICA                                  5                   
+
+A                                                         CAR                   
+-------------------------------------------------- ----------                   
+ANALISIS COMPLEJO                                           2                   
+ESTADISTICA                                                 6                   
+
+13 rows selected.
+
+SQL> DROP VIEW VISTA3;
+
+View dropped.
+
+SQL> DROP TABLE alu0100885453.ASIGNATURA;
+DROP TABLE alu0100885453.ASIGNATURA
+                         *
+ERROR at line 1:
+ORA-01031: insufficient privileges 
+
+
+SQL> EXIT
