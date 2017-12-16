@@ -1,0 +1,493 @@
+SQL> ED
+SP2-0107: Nothing to save.
+SQL> ;
+SP2-0223: No lines in SQL buffer.
+SQL> ED
+SP2-0107: Nothing to save.
+SQL> KLLKO;
+SP2-0042: unknown command "KLLKO" - rest of line ignored.
+SQL> ED
+SP2-0107: Nothing to save.
+SQL> ED
+SP2-0107: Nothing to save.
+SQL> EDIT
+SP2-0107: Nothing to save.
+SQL> ED;
+SP2-0107: Nothing to save.
+SQL> SELECT * FROM AREA;
+
+       CAR AR                                                                   
+---------- ------------------------------------------------------------         
+        CD                                                                      
+----------                                                                      
+         1 ALGEBRA                                                              
+         4                                                                      
+                                                                                
+         3 ASTRONOMIA Y ASTROFISICA                                             
+         2                                                                      
+                                                                                
+         2 ANALISIS MATEMATICO                                                  
+         1                                                                      
+                                                                                
+
+       CAR AR                                                                   
+---------- ------------------------------------------------------------         
+        CD                                                                      
+----------                                                                      
+         4 CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                 
+         3                                                                      
+                                                                                
+         5 DIDADICA DE LA MATEMATICA                                            
+         1                                                                      
+                                                                                
+         6 ESTADISTICA E INVESTIGACION OPERATIVA                                
+         3                                                                      
+                                                                                
+
+       CAR AR                                                                   
+---------- ------------------------------------------------------------         
+        CD                                                                      
+----------                                                                      
+         7 LENGUAJES Y SISTEMAS INFORMATICOS                                    
+         3                                                                      
+                                                                                
+         8 MATEMATICA APLICADA                                                  
+         1                                                                      
+                                                                                
+
+8 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	CURSOR c IS
+  3  		SELECT D, COUNT(DISTINCT CAR) AS X
+  4  		FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  		GROUP BY D
+  6  		ORDER BY X DESC;
+  7  	fila c%ROWTYPE;
+  8  BEGIN
+  9  	OPEN c;
+ 10  	LOOP
+ 11  		FETCH c INTO fila;
+ 12  		EXIT WHEN c%NOTFOUND;
+ 13  	END LOOP;
+ 14  	CLOSE c;
+ 15* END;
+ 16  /
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	CURSOR c IS
+  3  		SELECT D, COUNT(DISTINCT CAR) AS X
+  4  		FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  		GROUP BY D
+  6  		ORDER BY X DESC;
+  7  	fila c%ROWTYPE;
+  8  BEGIN
+  9  	OPEN c;
+ 10  	LOOP
+ 11  		FETCH c INTO fila;
+ 12  		EXIT WHEN c%NOTFOUND;
+ 13  		IF (%ROWCOUNT=3) THEN
+ 14  			DBMS_OUTPUT.PUT_LINE(fila.D);
+ 15  			EXIT;
+ 16  		END IF;
+ 17  	END LOOP;
+ 18  	CLOSE c;
+ 19* END;
+ 20  /
+		IF (%ROWCOUNT=3) THEN
+		    *
+ERROR at line 13:
+ORA-06550: line 13, column 7: 
+PLS-00103: Encountered the symbol "%" when expecting one of the following: 
+( - + case mod new not null <an identifier> 
+<a double-quoted delimited-identifier> <a bind variable> 
+continue avg count current exists max min prior sql stddev 
+sum variance execute forall merge time timestamp interval 
+date <a string literal with character set specification> 
+<a number> <a single-quoted SQL string> pipe 
+<an alternatively-quoted string literal with character set specification> 
+<an alternatively 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	CURSOR c IS
+  3  		SELECT D, COUNT(DISTINCT CAR) AS X
+  4  		FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  		GROUP BY D
+  6  		ORDER BY X DESC;
+  7  	fila c%ROWTYPE;
+  8  BEGIN
+  9  	OPEN c;
+ 10  	LOOP
+ 11  		FETCH c INTO fila;
+ 12  		EXIT WHEN c%NOTFOUND;
+ 13  		IF (%ROWCOUNT = 3) THEN
+ 14  			DBMS_OUTPUT.PUT_LINE(fila.D);
+ 15  			EXIT;
+ 16  		END IF;
+ 17  	END LOOP;
+ 18  	CLOSE c;
+ 19* END;
+SQL> /
+		IF (%ROWCOUNT = 3) THEN
+		    *
+ERROR at line 13:
+ORA-06550: line 13, column 7: 
+PLS-00103: Encountered the symbol "%" when expecting one of the following: 
+( - + case mod new not null <an identifier> 
+<a double-quoted delimited-identifier> <a bind variable> 
+continue avg count current exists max min prior sql stddev 
+sum variance execute forall merge time timestamp interval 
+date <a string literal with character set specification> 
+<a number> <a single-quoted SQL string> pipe 
+<an alternatively-quoted string literal with character set specification> 
+<an alternatively 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	CURSOR c IS
+  3  		SELECT D, COUNT(DISTINCT CAR) AS X
+  4  		FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  		GROUP BY D
+  6  		ORDER BY X DESC;
+  7  	fila c%ROWTYPE;
+  8  BEGIN
+  9  	OPEN c;
+ 10  	LOOP
+ 11  		FETCH c INTO fila;
+ 12  		EXIT WHEN c%NOTFOUND;
+ 13  		IF (c%ROWCOUNT = 3) THEN
+ 14  			DBMS_OUTPUT.PUT_LINE(fila.D);
+ 15  			EXIT;
+ 16  		END IF;
+ 17  	END LOOP;
+ 18  	CLOSE c;
+ 19* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	CURSOR c IS
+  3  		SELECT D, COUNT(DISTINCT CAR) AS X
+  4  		FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  		GROUP BY D
+  6  		ORDER BY X DESC;
+  7  	fila c%ROWTYPE;
+  8  BEGIN
+  9  	OPEN c;
+ 10  	LOOP
+ 11  		FETCH c INTO fila;
+ 12  		EXIT WHEN c%NOTFOUND;
+ 13  		IF (fila%ROWCOUNT = 3) THEN
+ 14  			DBMS_OUTPUT.PUT_LINE(fila.D);
+ 15  			EXIT;
+ 16  		END IF;
+ 17  	END LOOP;
+ 18  	CLOSE c;
+ 19* END;
+SQL> /
+		IF (fila%ROWCOUNT = 3) THEN
+		    *
+ERROR at line 13:
+ORA-06550: line 13, column 7: 
+PLS-00324: cursor attribute may not be applied to non-cursor 'FILA' 
+ORA-06550: line 13, column 3: 
+PL/SQL: Statement ignored 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	CURSOR c IS
+  3  		SELECT D, COUNT(DISTINCT CAR) AS X
+  4  		FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  		GROUP BY D
+  6  		ORDER BY X DESC;
+  7  	fila c%ROWTYPE;
+  8  BEGIN
+  9  	OPEN c;
+ 10  	LOOP
+ 11  		FETCH c INTO fila;
+ 12  		EXIT WHEN c%NOTFOUND;
+ 13  		IF (SQL%ROWCOUNT = 3) THEN
+ 14  			DBMS_OUTPUT.PUT_LINE(fila.D);
+ 15  			EXIT;
+ 16  		END IF;
+ 17  	END LOOP;
+ 18  	CLOSE c;
+ 19* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> CALL
+  2  ;
+
+*
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE TERCERA_MAYOR_AREA IS
+  2     CURSOR c IS
+  3             SELECT D, COUNT(DISTINCT CAR) AS X
+  4             FROM DEPARTAMENTO NATURAL JOIN AREA
+  5             GROUP BY D
+  6             ORDER BY X DESC;
+  7     fila c%ROWTYPE;
+  8  BEGIN
+  9     OPEN c;
+ 10     LOOP
+ 11             FETCH c INTO fila;
+ 12             EXIT WHEN c%NOTFOUND;
+ 13             IF (SQL%ROWCOUNT = 3) THEN
+ 14                     DBMS_OUTPUT.PUT_LINE(fila.D);
+ 15                     EXIT;
+ 16             END IF;
+ 17     END LOOP;
+ 18     CLOSE c;
+ 19* END;
+SQL> /
+
+Procedure created.
+
+SQL> CALL TERCERA_MAYOR_AREA();
+
+Call completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* :X
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE TERCERA_MAYOR_AREA IS
+  2      CURSOR c IS
+  3              SELECT D, COUNT(DISTINCT CAR) AS X
+  4              FROM DEPARTAMENTO NATURAL JOIN AREA
+  5              GROUP BY D
+  6              ORDER BY X DESC;
+  7      fila c%ROWTYPE;
+  8   BEGIN
+  9      OPEN c;
+ 10      LOOP
+ 11              FETCH c INTO fila;
+ 12              EXIT WHEN c%NOTFOUND;
+ 13              IF (SQL%ROWCOUNT = 3) THEN
+ 14                      DBMS_OUTPUT.PUT_LINE(fila.D);
+ 15                      EXIT;
+ 16              END IF;
+ 17      END LOOP;
+ 18      CLOSE c;
+ 19*  END;
+ 20  /
+
+Procedure created.
+
+SQL> SET SERVEROUTPUT ON
+SQL> CALL TERCERA_MAYOR_AREA();
+
+Call completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE TERCERA_MAYOR_AREA IS
+  2      CURSOR c IS
+  3              SELECT D, COUNT(DISTINCT CAR) AS X
+  4              FROM DEPARTAMENTO NATURAL JOIN AREA
+  5              GROUP BY D
+  6              ORDER BY X DESC;
+  7      fila c%ROWTYPE;
+  8   BEGIN
+  9      OPEN c;
+ 10      LOOP
+ 11              FETCH c INTO fila;
+ 12              EXIT WHEN c%NOTFOUND;
+ 13  		DBMS_OUTPUT.PUT_LINE(fila.D);
+ 14              IF (SQL%ROWCOUNT = 3) THEN
+ 15                      DBMS_OUTPUT.PUT_LINE(fila.D);
+ 16  			DBMS_OUTPUT.PUT_LINE('3');
+ 17                      EXIT;
+ 18              END IF;
+ 19      END LOOP;
+ 20      CLOSE c;
+ 21*  END;
+SQL> /
+
+Procedure created.
+
+SQL> CALL TERCERA_MAYOR_AREA();
+ANALISIS MATEMATICO                                                             
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                              
+MATEMATICA FUNDAMENTAL                                                          
+ASTROFISICA                                                                     
+
+Call completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE TERCERA_MAYOR_AREA IS
+  2       CURSOR c IS
+  3               SELECT D, COUNT(DISTINCT CAR) AS X
+  4               FROM DEPARTAMENTO NATURAL JOIN AREA
+  5               GROUP BY D
+  6               ORDER BY X DESC;
+  7       fila c%ROWTYPE;
+  8    BEGIN
+  9       OPEN c;
+ 10       LOOP
+ 11               FETCH c INTO fila;
+ 12               EXIT WHEN c%NOTFOUND;
+ 13              DBMS_OUTPUT.PUT_LINE(fila.D);
+ 14               IF (SQL%ROWCOUNT == 3) THEN
+ 15                       DBMS_OUTPUT.PUT_LINE(fila.D);
+ 16                      DBMS_OUTPUT.PUT_LINE('3');
+ 17                       EXIT;
+ 18               END IF;
+ 19       END LOOP;
+ 20       CLOSE c;
+ 21*   END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> CALL TERCERA_MAYOR_AREA();
+CALL TERCERA_MAYOR_AREA()
+     *
+ERROR at line 1:
+ORA-06575: Package or function TERCERA_MAYOR_AREA is in an invalid state 
+
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE TERCERA_MAYOR_AREA:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+14/32    PLS-00103: Encountered the symbol "=" when expecting one of the        
+         following:                                                             
+         ( - + all case mod new null <an identifier>                            
+         <a double-quoted delimited-identifier> <a bind variable>               
+         continue any avg count current max min prior some sql stddev           
+         sum variance execute forall merge time timestamp interval              
+         date <a string literal with character set specification>               
+         <a number> <a single-quoted SQL string> pipe                           
+         <an alternatively-quoted string literal with character set             
+         specification>                                                         
+         <an alternative                                                        
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE TERCERA_MAYOR_AREA IS
+  2       CURSOR c IS
+  3               SELECT D, COUNT(DISTINCT CAR) AS X
+  4               FROM DEPARTAMENTO NATURAL JOIN AREA
+  5               GROUP BY D
+  6               ORDER BY X DESC;
+  7       fila c%ROWTYPE;
+  8    BEGIN
+  9       OPEN c;
+ 10       LOOP
+ 11               FETCH c INTO fila;
+ 12               EXIT WHEN c%NOTFOUND;
+ 13              DBMS_OUTPUT.PUT_LINE(fila.D);
+ 14               IF (c%ROWCOUNT = 3) THEN
+ 15                       DBMS_OUTPUT.PUT_LINE(fila.D);
+ 16                      DBMS_OUTPUT.PUT_LINE('3');
+ 17                       EXIT;
+ 18               END IF;
+ 19       END LOOP;
+ 20       CLOSE c;
+ 21*   END;
+SQL> /
+
+Procedure created.
+
+SQL> CALL TERCERA_MAYOR_AREA();
+ANALISIS MATEMATICO                                                             
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                              
+MATEMATICA FUNDAMENTAL                                                          
+MATEMATICA FUNDAMENTAL                                                          
+3                                                                               
+
+Call completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE TERCERA_MAYOR_AREA IS
+  2       CURSOR c IS
+  3               SELECT D, COUNT(DISTINCT CAR) AS X
+  4               FROM DEPARTAMENTO NATURAL JOIN AREA
+  5               GROUP BY D
+  6               ORDER BY X DESC;
+  7       fila c%ROWTYPE;
+  8    BEGIN
+  9       OPEN c;
+ 10       LOOP
+ 11               FETCH c INTO fila;
+ 12               EXIT WHEN c%NOTFOUND;
+ 13               IF (c%ROWCOUNT = 3) THEN
+ 14                       DBMS_OUTPUT.PUT_LINE(fila.D);
+ 15                       EXIT;
+ 16               END IF;
+ 17       END LOOP;
+ 18       CLOSE c;
+ 19*   END;
+ 20  /
+
+Procedure created.
+
+SQL> CALL TERCERA_MAYOR_AREA();
+MATEMATICA FUNDAMENTAL                                                          
+
+Call completed.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> ED
+Wrote file afiedt.buf
+
+  1* Q
+SQL> SPOOL OFF
