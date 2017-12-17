@@ -1,0 +1,168 @@
+SQL> SET SERVEROUTPUT ON
+SQL> ED
+SP2-0107: Nothing to save.
+SQL> SELECT;
+SELECT
+     *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE AREAS (v_cd IN DEPARTAMENTO.CD%TYPE) IS
+  2  fila AREA%ROWTYPE;
+  3  CURSOR c IS
+  4  SELECT FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  WHERE v_cd = CD;
+  6  BEGIN
+  7  OPEN c;
+  8  LOOP
+  9  FETCH c INTO fila;
+ 10  IF c%NOTFOUND THEN EXIT;
+ 11  END IF;
+ 12  DBMS_OUTPUT-PUT_LINE(fila.AR);
+ 13  END LOOP;
+ 14  CLOSE c;
+ 15* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE AREAS:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+4/1      PL/SQL: SQL Statement ignored                                          
+4/8      PL/SQL: ORA-00936: missing expression                                  
+12/12    PLS-00103: Encountered the symbol "-" when expecting one of the        
+         following:                                                             
+         := . ( @ % ;                                                           
+         The symbol ":=" was substituted for "-" to continue.                   
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE AREAS (v_cd IN DEPARTAMENTO.CD%TYPE) IS
+  2  fila AREA%ROWTYPE;
+  3  CURSOR c IS
+  4  SELECT FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  WHERE v_cd = CD;
+  6  BEGIN
+  7  OPEN c;
+  8  LOOP
+  9  FETCH c INTO fila;
+ 10  IF c%NOTFOUND THEN EXIT;
+ 11  END IF;
+ 12  DBMS_OUTPUT.PUT_LINE(fila.AR);
+ 13  END LOOP;
+ 14  CLOSE c;
+ 15* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE AREAS:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+4/1      PL/SQL: SQL Statement ignored                                          
+4/8      PL/SQL: ORA-00936: missing expression                                  
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE AREAS (v_cd IN DEPARTAMENTO.CD%TYPE) IS
+  2  fila AREA%ROWTYPE;
+  3  CURSOR c IS
+  4  SELECT AR FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  WHERE v_cd = CD;
+  6  BEGIN
+  7  OPEN c;
+  8  LOOP
+  9  FETCH c INTO fila;
+ 10  IF c%NOTFOUND THEN EXIT;
+ 11  END IF;
+ 12  DBMS_OUTPUT.PUT_LINE(fila.AR);
+ 13  END LOOP;
+ 14  CLOSE c;
+ 15* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE AREAS:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+9/1      PL/SQL: SQL Statement ignored                                          
+9/1      PLS-00394: wrong number of values in the INTO list of a FETCH          
+         statement                                                              
+                                                                                
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE AREAS (v_cd IN DEPARTAMENTO.CD%TYPE) IS
+  2  fila AREA.AR%TYPE;
+  3  CURSOR c IS
+  4  SELECT AR FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  WHERE v_cd = CD;
+  6  BEGIN
+  7  OPEN c;
+  8  LOOP
+  9  FETCH c INTO fila;
+ 10  IF c%NOTFOUND THEN EXIT;
+ 11  END IF;
+ 12  DBMS_OUTPUT.PUT_LINE(fila.AR);
+ 13  END LOOP;
+ 14  CLOSE c;
+ 15* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE AREAS:
+
+LINE/COL ERROR                                                                  
+-------- -----------------------------------------------------------------      
+12/1     PL/SQL: Statement ignored                                              
+12/27    PLS-00487: Invalid reference to variable 'FILA'                        
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE AREAS (v_cd IN DEPARTAMENTO.CD%TYPE) IS
+  2  fila AREA.AR%TYPE;
+  3  CURSOR c IS
+  4  SELECT AR FROM DEPARTAMENTO NATURAL JOIN AREA
+  5  WHERE v_cd = CD;
+  6  BEGIN
+  7  OPEN c;
+  8  LOOP
+  9  FETCH c INTO fila;
+ 10  IF c%NOTFOUND THEN EXIT;
+ 11  END IF;
+ 12  DBMS_OUTPUT.PUT_LINE(fila);
+ 13  END LOOP;
+ 14  CLOSE c;
+ 15* END;
+SQL> /
+
+Procedure created.
+
+SQL> CALL AREAS(2);
+ASTRONOMIA Y ASTROFISICA                                                        
+
+Call completed.
+
+SQL> CALL AREAS(3);
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                            
+ESTADISTICA E INVESTIGACION OPERATIVA                                           
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+
+Call completed.
+
+SQL> SPOOL OFF
